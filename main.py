@@ -53,3 +53,12 @@ def add_expense(expense: Expense):
     conn.commit()
     conn.close()
     return {"message": "Gasto guardado correctamente"}
+
+@app.delete("/expenses/{expense_id}")
+def delete_expense(expense_id: int):
+    conn = sqlite3.connect("expenses.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+    conn.commit()
+    conn.close()
+    return {"message": f"Gasto con ID {expense_id} eliminado correctamente"}
